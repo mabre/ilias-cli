@@ -9,26 +9,26 @@ import (
 )
 
 const (
-	WorkspaceFilename = ".workspace.yml"
+	WorkspaceFilename = "workspace.yml"
 	UsercacheFilename = ".user"
 )
 
 type Exercise struct {
-	Reference	string 		`yaml:"reference"`
-	Assignment	string 		`yaml:"assignment"`
+	Reference  string `yaml:"reference"`
+	Assignment string `yaml:"assignment"`
 }
 
 type Table struct {
-	Reference	string 		`yaml:"reference"`
-	Identifier	string 		`yaml:"identifier"`
-	Name	    string		`yaml:"name"`
+	Reference  string `yaml:"reference"`
+	Identifier string `yaml:"identifier"`
+	Name       string `yaml:"name"`
 }
 
 type Workspace struct {
-	Title			  string					`yaml:"title"`
-	Exercise 		  Exercise					`yaml:"exercise"`
+	Title    string   `yaml:"title"`
+	Exercise Exercise `yaml:"exercise"`
 	//Table 		  	  Table						`yaml:"table"`
-	Corrections       map[string][]string		`yaml:"corrections"`
+	Corrections map[string][]string `yaml:"corrections"`
 }
 
 func ReadWorkspace() Workspace {

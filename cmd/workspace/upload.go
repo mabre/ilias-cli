@@ -7,6 +7,7 @@ import (
 	"github.com/spf13/cobra"
 	"log"
 	"os"
+	"path/filepath"
 )
 
 var (
@@ -14,10 +15,10 @@ var (
 )
 
 var workspaceUploadCommand = &cobra.Command{
-	Use:   "upload",
-	Short: "Uploads the current workspace to the ILIAS platform",
+	Use:           "upload [corrector id]",
+	Short:         "Uploads the current workspace (corrections of the given corrector) to the ILIAS platform",
 	SilenceErrors: true,
-	Args: cobra.NoArgs,
+	Args:          cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 
 		workspace := util.ReadWorkspace()
@@ -27,7 +28,7 @@ var workspaceUploadCommand = &cobra.Command{
 		if customMembers != nil {
 			members = customMembers
 		} else {
-			members = workspace.Corrections[client.User.Username]
+			members = workspace.Corrections[args[0]]
 		}
 
 		corrections, err := util.ReadCorrections(members)
@@ -56,7 +57,18 @@ var workspaceUploadCommand = &cobra.Command{
 				log.Fatal(err)
 			}
 
-			spin.UpdateMessage(fmt.Sprintf("Uploading corrections (%d/%d)", index + 1, len(members)))
+			err2 := client.Exercise.UpdateFileFeedback(&ilias.FileFeedbackParams{
+				Reference:  workspace.Exercise.Reference,
+				Assignment: workspace.Exercise.Assignment,
+				StudentId:  correction.Student,
+				Token:      client.User.Token,
+			}, filepath.Join(correction.Student, FileCorrectionFilename))
+
+			if err2 != nil {
+				log.Fatal(err)
+			}
+
+			spin.UpdateMessage(fmt.Sprintf("Uploading corrections (%d/%d)", index+1, len(members)))
 		}
 
 		spin.StopSuccess(util.NoMessage)
