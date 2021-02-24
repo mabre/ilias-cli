@@ -21,6 +21,7 @@ correctors=`grep ":" workspace.yml | grep "^ " | grep -vE "reference|assignment"
 for corrector in $correctors; do
     echo fetching submission_ids for $corrector
     mkdir -p $corrector/$exercise_sheet_foldername
+    cp check.py $corrector/$exercise_sheet_foldername/
     cp workspace.yml $corrector/$exercise_sheet_foldername/
     cp CORRECTION.tmpl $corrector/$exercise_sheet_foldername/
     cd $corrector/$exercise_sheet_foldername
