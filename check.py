@@ -42,6 +42,12 @@ def check_corrected_and_points_given(directory, lines):
             for given, possible in zip(points_given, points_possible):
                 if not (0 <= given <= possible) or (int(given) != given):
                     print(f"{directory} hat eine ungültige Punktzahl: {given}/{possible} Punkte gegeben")
+            if len(points_given) != len(points_possible):
+                if len(points_given) == len(points_possible) + 1:
+                    if points_given[-1] > 0:
+                        print(f"{directory} hat zu viele Teilaufgaben")
+                else:
+                    print(f"{directory} hat zu viele Teilaufgaben")
     if not corrected:
         print(f"Korrektur von {directory} nicht als fertig markiert")
     if not points_given:
