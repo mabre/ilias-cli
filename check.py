@@ -37,6 +37,8 @@ def check_corrected_and_points_given(directory, lines):
             corrected = True
         if "points:" in line:
             points_given = ast.literal_eval(line.split(" ")[-1])
+            if sum(points_given) < 0:
+                print(f"{directory} hat negative Gesamtpunktzahl")
         if "erreichbare" in line:
             points_possible = [int(point) for point in line.split(" ")[-1].split("+")]
             for given, possible in zip(points_given, points_possible):
