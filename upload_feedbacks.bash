@@ -20,10 +20,14 @@ for corrector in $correctors; do
     cp check.py $corrector/$exercise_sheet_foldername/
     cd $corrector/$exercise_sheet_foldername
 
-    chmod +x check.py
-    ./check.py
-    
-    cd ../..
+    if [ $? -eq 0 ]; then
+        chmod +x check.py
+        ./check.py
+        
+        cd ../..
+    else
+        echo [E] could not cd to $corrector/$exercise_sheet_foldername
+    fi
 done
 
 
