@@ -7,6 +7,7 @@ import sys
 def main():
     check_working_directory()
     check_corrections()
+    print("Alle Checks durchgelaufen")
 
 
 def check_corrections():
