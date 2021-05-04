@@ -35,7 +35,7 @@ for corrector in $correctors; do
         if [ ! -f "$submission_id/Abgabe.pdf" ]; then
             echo [i] $submission_id has no pdf
             sed -i "s/corrected: false/corrected: true/" $submission_id/Korrektur.yml
-            echo "  Kein PDF abgegeben. Ihr Korrektor kann an dieser Korrektur nichts ändern" >> $submission_id/Korrektur.yml
+            echo "  Kein PDF abgegeben. Ihr Korrektor kann an dieser Korrektur nichts ändern." >> $submission_id/Korrektur.yml
             cp "$no_pdf_feedback_file" $submission_id/Korrektur.pdf
         fi
     done
